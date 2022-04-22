@@ -1,5 +1,6 @@
 package com.test.customers.controller;
 
+import com.test.customers.DTO.CustomerDto;
 import com.test.customers.entity.Customer;
 import com.test.customers.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +35,14 @@ public class MyRESTController {
 
     @PostMapping("/customers")
     public ResponseEntity<Customer> addNewCustomer(@Valid @RequestBody Customer customer){
-        customerService.saveCustomer(customer);
-        return new ResponseEntity<>(customer,HttpStatus.CREATED);
+        Customer resultCustomer = customerService.saveCustomer(customer);
+        return ResponseEntity.ok(resultCustomer);
     }
 
-
-    @PutMapping("/customers")
-    public ResponseEntity<Customer> updateCustomer(@Valid @RequestBody Customer customer){
-        customerService.saveCustomer(customer);
-        return new ResponseEntity<>(customer, HttpStatus.OK);
+    @PutMapping("/customers/{id}")
+    public ResponseEntity<Customer> updateCustomer(@Valid @PathVariable("id") Long id, @RequestBody Customer customer){
+        Customer resultCustomer = customerService.updateCustomer(id,customer);
+        return ResponseEntity.ok(resultCustomer);
     }
 
     @DeleteMapping("/customers/{id}")
