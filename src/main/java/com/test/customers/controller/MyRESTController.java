@@ -24,31 +24,33 @@ public class MyRESTController {
     }
 
     @GetMapping("/customers")
-    public List<Customer> showAllCustomers(){
+    public List<CustomerDto> showAllCustomers(){
         return customerService.getAllCustomers();
     }
 
     @GetMapping("/customers/{id}")
-    public Customer getCustomer(@PathVariable Long id ){
-        return customerService.getCustomer(id);
+    public ResponseEntity<CustomerDto> getCustomer(@PathVariable Long id ){
+        CustomerDto customerDto = customerService.getCustomer(id);
+        return ResponseEntity.ok(customerDto);
     }
 
     @PostMapping("/customers")
-    public ResponseEntity<Customer> addNewCustomer(@Valid @RequestBody Customer customer){
-        Customer resultCustomer = customerService.saveCustomer(customer);
-        return ResponseEntity.ok(resultCustomer);
+    public ResponseEntity<CustomerDto> addNewCustomer(@Valid @RequestBody CustomerDto customer){
+        CustomerDto resultCustomer = customerService.saveCustomer(customer);
+        return new ResponseEntity<>(resultCustomer, HttpStatus.CREATED);
     }
 
     @PutMapping("/customers/{id}")
-    public ResponseEntity<Customer> updateCustomer(@Valid @PathVariable("id") Long id, @RequestBody Customer customer){
-        Customer resultCustomer = customerService.updateCustomer(id,customer);
+    public ResponseEntity<CustomerDto> updateCustomer(@Valid @PathVariable("id") Long id,
+                                                      @RequestBody CustomerDto customer){
+        CustomerDto resultCustomer = customerService.updateCustomer(id,customer);
         return ResponseEntity.ok(resultCustomer);
     }
 
     @DeleteMapping("/customers/{id}")
     public String deleteCustomer(@PathVariable Long id ){
         customerService.deleteCustomer(id);
-        return "Employee with ID = " + id + " was deleted";
+        return "Customer with ID = " + id + " was deleted, but in DB he is ";
 
     }
 

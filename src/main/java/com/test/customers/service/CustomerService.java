@@ -2,18 +2,17 @@ package com.test.customers.service;
 
 
 import com.test.customers.DTO.CustomerDto;
-import com.test.customers.entity.Customer;
 
 import java.util.List;
 
 public interface CustomerService {
-    public List<Customer> getAllCustomers();
+    public List<CustomerDto> getAllCustomers();
 
-    public Customer saveCustomer(Customer customer);
+    public CustomerDto saveCustomer(CustomerDto customer);
 
-    public Customer updateCustomer(Long id, Customer customer);
+    public CustomerDto updateCustomer(Long id, CustomerDto customer);
 
-    public Customer getCustomer(Long id);
+    public CustomerDto getCustomer(Long id);
 
     public void deleteCustomer(Long id);
 
